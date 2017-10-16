@@ -6,3 +6,6 @@ This is just a comment to check changes in Jenkins
 
 # Feature 3
 My second feature comes next
+
+# Feature 4
+Last feature
