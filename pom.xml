@@ -6,7 +6,6 @@
 	<artifactId>helloworld-example</artifactId>
 	<packaging>jar</packaging>
 	<version>0.1.0</version>
-
 	<dependencies>
 		<dependency>
 			<groupId>junit</groupId>
