@@ -12,3 +12,6 @@ Last feature
 
 # Feature 5
 Integration as Gitflow Worlflow
+
+# Notes
+Adding some notes to test hooks
