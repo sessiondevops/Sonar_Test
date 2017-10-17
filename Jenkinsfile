@@ -5,5 +5,10 @@ node('master') {
 			sh 'mvn clean install'
 		}
 	}
+	stage('SonarQube analysis') {
+		def scannerHome = tool 'SonarQube Scanner 2.8';
+		withSonarQubeEnv('SonarQube') {
+			sh "${scannerHome}/bin/sonar-scanner"
+		}
+	}
 }
-
