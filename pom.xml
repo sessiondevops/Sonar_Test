@@ -38,8 +38,9 @@
 				</executions>
 			</plugin>
 			<plugin>
-				<groupId>com.atlassian.maven.plugins</groupId>
-				<artifactId>maven-clover2-plugin</artifactId>
+				<groupId>org.openclover</groupId>
+				<artifactId>clover-maven-plugin</artifactId>
+				<version>4.2.0</version>
 				<executions>
 					<execution>
 						<phase>verify</phase>
@@ -55,8 +56,9 @@
 		<plugins>
 			<plugin>
 				<groupId>com.atlassian.maven.plugins</groupId>
-				<artifactId>maven-clover2-plugin</artifactId>
+				<artifactId>maven-clover-plugin</artifactId>
+                        	<version>4.1.2</version>
 			</plugin>
-		</plugins>
+                </plugins>
 	</reporting>
 </project>
