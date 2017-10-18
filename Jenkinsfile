@@ -1,8 +1,14 @@
 node('master') {
 	checkout scm
 	stage('build') {
-		withMaven(jdk: 'Default Java', maven: 'Default Maven') {
-			sh 'mvn clean install verify site'
+		if(env.BRANCH_NAME == 'master') {
+			withMaven(jdk: 'Default Java', maven: 'Default Maven') {
+				sh 'mvn clean clover:setup package clover:clover'
+			}
+		} else {
+			withMaven(jdk: 'Default Java', maven: 'Default Maven') {
+				sh 'mvn clean install'
+			}
 		}
 	}
 	stage('SonarQube analysis') {
