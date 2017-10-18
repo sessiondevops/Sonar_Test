@@ -55,9 +55,9 @@
 	<reporting>
 		<plugins>
 			<plugin>
-				<groupId>com.atlassian.maven.plugins</groupId>
-				<artifactId>maven-clover-plugin</artifactId>
-                        	<version>4.1.2</version>
+				<groupId>org.openclover</groupId>
+				<artifactId>clover-maven-plugin</artifactId>
+                        	<version>4.2.0</version>
 			</plugin>
                 </plugins>
 	</reporting>
