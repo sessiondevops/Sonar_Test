@@ -24,7 +24,8 @@ node('master') {
 						"props": "Integration-Tested=Yes;Performance-Tested=No"
 					}
 				]
-			}""" server.upload(uploadSpec)
+			}"""
+			server.upload(uploadSpec)
 		}
 	}
 }
