@@ -19,7 +19,7 @@ node('master') {
 			def uploadSpec = """{
 				"files": [
 					{
-						"pattern": "target/helloworld-example-0.1.0.jar",
+						"pattern": "target/*.jar",
 						"target": "helloworld-greeting-project/${BUILD_NUMBER}/",
 						"props": "Integration-Tested=Yes;Performance-Tested=No"
 					}
