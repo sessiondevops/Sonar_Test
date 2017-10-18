@@ -79,7 +79,6 @@
 						<releaseBranchPrefix>release-</releaseBranchPrefix>
 						<hotfixBranchPrefix>hotfix-</hotfixBranchPrefix>
 						<versionTagPrefix>${project.artifactId}-</versionTagPrefix>
-						<pushReleases>true</pushReleases>
 						<allowUntracked>true</allowUntracked>
 					</flowInitContext>
 				</configuration>
