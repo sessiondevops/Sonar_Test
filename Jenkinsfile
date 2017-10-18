@@ -13,7 +13,7 @@ node('master') {
 			}
 		}
 	}
-	stage('Artifactory download and upload') {
+	stage('Artifactory upload') {
 		if(env.BRANCH_NAME == 'master') {
 			def server = Artifactory.server 'Default Artifactory'
 			def uploadSpec = """{
