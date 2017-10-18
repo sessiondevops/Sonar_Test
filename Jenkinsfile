@@ -6,9 +6,11 @@ node('master') {
 		}
 	}
 	stage('SonarQube analysis') {
-		def scannerHome = tool 'Sonar Scanner';
-		withSonarQubeEnv('SonarQube') {
-			sh "${scannerHome}/bin/sonar-scanner"
+		if(env.BRANCH_NAME == 'master') {
+			def scannerHome = tool 'Sonar Scanner';
+			withSonarQubeEnv('SonarQube') {
+				sh "${scannerHome}/bin/sonar-scanner"
+			}
 		}
 	}
 }
