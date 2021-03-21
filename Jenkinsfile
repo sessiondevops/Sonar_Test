@@ -1,37 +1,61 @@
-node('master') {
-	checkout scm
-	stage('build') {
-		if(env.BRANCH_NAME == 'master') {
-			withMaven(jdk: 'Default Java', maven: 'Default Maven') {
-				sh 'mvn clean clover:setup package clover:clover'
-			}
-		} else {
-			withMaven(jdk: 'Default Java', maven: 'Default Maven') {
-				sh 'mvn clean install'
+pipeline {
+    agent {
+        label "master"
+    }
+    tools {
+        maven "Maven"
+    }
+	stages {
+		stage("Check Out") {
+			steps {
+				script {
+					checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'Nexus_Cred', url: 'https://github.com/sessiondevops/nexus.git']]])
+					
+				}
 			}
 		}
-	}
-	stage('SonarQube analysis') {
-		if(env.BRANCH_NAME == 'master') {
-			def scannerHome = tool 'Sonar Scanner';
-			withSonarQubeEnv('SonarQube') {
+		stage("Build") {
+			steps {
+				script {
+					sh 'mvn clean install'
+				}
+			}
+		} 
+		stage('SonarQube analysis') {
+			def scannerHome = tool 'Sonar';
+			withSonarQubeEnv('Sonar_Server') {
 				sh "${scannerHome}/bin/sonar-scanner"
 			}
 		}
-	}
-	stage('Artifactory upload') {
-		if(env.BRANCH_NAME == 'master') {
-			def server = Artifactory.server 'Default Artifactory'
-			def uploadSpec = """{
-				"files": [
-					{
-						"pattern": "target/*.jar",
-						"target": "helloworld-greeting-project/${BUILD_NUMBER}/",
-						"props": "Integration-Tested=Yes;Performance-Tested=No"
-					}
-				]
-			}"""
-			server.upload(uploadSpec)
+		stage("Nexus Upload") {
+			steps {
+				script {
+					def pom = readMavenPom file: ''
+					//echo  "${projectArtifactId} ${projectVersion}"
+					nexusArtifactUploader artifacts: [
+						[
+							artifactId: "${pom.artifactId}", 
+							classifier: '', 
+							file: "target/${pom.artifactId}-${pom.version}.war", 
+							type: 'war'
+						]
+					], 
+						credentialsId: 'Nexus_Cred', 
+						groupId: 'com.marsh', 
+						nexusUrl: 'ec2-52-15-81-117.us-east-2.compute.amazonaws.com:8081', 
+						nexusVersion: 'nexus3', 
+						protocol: 'http', 
+						repository: 'et2-Snapshot', 
+						version: "${pom.version}"
+                }				
+                    
+            }
 		}
+		
 	}
+	post {
+        always {
+            deleteDir() /* clean up our workspace */
+        }
+	}	
 }
