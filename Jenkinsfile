@@ -14,7 +14,7 @@ pipeline {
 				}
 			}
 		}
-		stage("Build") {
+		/*stage("Build") {
 			steps {
 				script {
 					sh 'mvn clean install'
@@ -26,7 +26,7 @@ pipeline {
 			withSonarQubeEnv('My SonarQube Server') { // If you have configured more than one global server connection, you can specify its name
 				sh "${scannerHome}/bin/sonar-scanner"
 			}
-		}
+		} */
 		/* stage("Nexus Upload") {
 			steps {
 				script {
