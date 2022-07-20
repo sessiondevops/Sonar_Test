@@ -33,7 +33,7 @@ pipeline {
                         
                     }
                 }
-                
+	    }
             }
 		        stage("Package Development")
 
@@ -47,7 +47,7 @@ pipeline {
 
             }
 
-        }
+        
         }
 	}
 	post {
