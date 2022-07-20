@@ -12,44 +12,30 @@ pipeline {
 				}
 			}
 		}
-		stage("Build") {
-			steps {
-				script {
-					sh 'mvn clean install'
-				}
-			}
-		} 
-		 stage('SonarQube analysis') {
-			def scannerHome = tool 'SonarScanner 4.0';
-			withSonarQubeEnv('My SonarQube Server') { // If you have configured more than one global server connection, you can specify its name
-				sh "${scannerHome}/bin/sonar-scanner"
-			}
-		}
-		/* stage("Nexus Upload") {
-			steps {
-				script {
-					def pom = readMavenPom file: ''
-					//echo  "${projectArtifactId} ${projectVersion}"
-					nexusArtifactUploader artifacts: [
-						[
-							artifactId: "${pom.artifactId}", 
-							classifier: '', 
-							file: "target/${pom.artifactId}-${pom.version}.war", 
-							type: 'war'
-						]
-					], 
-						credentialsId: 'Nexus_Cred', 
-						groupId: 'com.marsh', 
-						nexusUrl: 'ec2-52-15-81-117.us-east-2.compute.amazonaws.com:8081', 
-						nexusVersion: 'nexus3', 
-						protocol: 'http', 
-						repository: 'et2-Snapshot', 
-						version: "${pom.version}"
-                }				
-                    
+		stage("Sonarqube_Chek"){
+           steps{
+                script{
+                    def scannerHome = tool 'Sonarqube';
+                    withSonarQubeEnv("Sonarqube"){
+                        sh "${scannerHome}/bin/sonar-scanner"
+                    }
+                }
+           }   
+        }
+        stage("Quality Gate Check"){
+            steps{
+                script{
+                    timeout(time: 3, unit: 'MINUTES'){
+                        def qg = waitForQualityGate();
+                        if (qg.status != 'OK'){
+                            error "Pipleline aborted due to QG failure: ${qg.status}"
+                        }
+                        
+                    }
+                }
+                
             }
-		} */
-		
+        }
 	}
 	post {
         always {
