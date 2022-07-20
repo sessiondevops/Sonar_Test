@@ -9,7 +9,7 @@ pipeline {
 		stage("Check Out") {
 			steps {
 				script {
-					checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'Nexus_Cred', url: 'https://github.com/sessiondevops/nexus.git']]])
+					checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'git-cred', url: 'https://github.com/sessiondevops/Sonar_Test.git']]])
 					
 				}
 			}
@@ -27,7 +27,7 @@ pipeline {
 				sh "${scannerHome}/bin/sonar-scanner"
 			}
 		}
-		stage("Nexus Upload") {
+		/* stage("Nexus Upload") {
 			steps {
 				script {
 					def pom = readMavenPom file: ''
@@ -50,7 +50,7 @@ pipeline {
                 }				
                     
             }
-		}
+		} */
 		
 	}
 	post {
