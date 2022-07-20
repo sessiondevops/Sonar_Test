@@ -1,6 +1,6 @@
 pipeline {
     agent {
-        label "Built-In Node"
+       
     }
     tools {
         maven "maven"
