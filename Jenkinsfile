@@ -35,6 +35,19 @@ pipeline {
                 }
                 
             }
+		        stage("Package Development")
+
+        {
+
+            steps
+
+            {
+
+                sh 'mvn clean install'
+
+            }
+
+        }
         }
 	}
 	post {
