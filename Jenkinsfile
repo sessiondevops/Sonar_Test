@@ -35,8 +35,7 @@ pipeline {
                 }
 	    }
             }
-		        stage("Package Development")
-
+	/* stage("Package Development")
         {
 
             steps
@@ -48,7 +47,7 @@ pipeline {
             }
 
         
-        }
+        } */
 	}
 	post {
         always {
