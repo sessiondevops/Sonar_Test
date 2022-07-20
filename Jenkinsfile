@@ -9,7 +9,7 @@ pipeline {
 		stage("Check Out") {
 			steps {
 				script {
-					checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'git-cred', url: 'https://github.com/sessiondevops/Sonar_Test.git']]])
+					checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[credentialsId: 'git-cred', url: 'https://github.com/sessiondevops/Sonar_Test.git']]])
 					
 				}
 			}
